@@ -428,7 +428,7 @@ Transform:
   - {fileID: 4953769418582527957}
   - {fileID: 4953769417891670232}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4953769419188144755
 MeshFilter:
@@ -526,4 +526,5 @@ MonoBehaviour:
   runSpeedMultiplier: 2
   rb: {fileID: 4953769419188144757}
   spawnPoint: {fileID: 0}
+  cameraObject: {fileID: 4953769418582527952}
   maxVelocityChange: 1

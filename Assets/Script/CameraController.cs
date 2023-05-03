@@ -33,4 +33,10 @@ public class CameraController : MonoBehaviour
         transform.eulerAngles = new Vector3(rotY, rotX, 0.0f); //Applico la rotazione
         player.transform.eulerAngles = new Vector3(0.0f, rotX, 0.0f); //Applico la rotazione
     }
+
+    public void ResetCamera()
+    {
+        rotX = 0;
+        rotY = 0;
+    }
 }

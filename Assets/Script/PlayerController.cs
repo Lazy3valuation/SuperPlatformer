@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private GameObject spawnPoint;
 
+    public GameObject cameraObject;
+
     private bool isGrounded;
 
     [SerializeField]
@@ -42,6 +44,7 @@ public class PlayerController : MonoBehaviour
         UpdateAxis();
         CheckJump();
         CheckRun();
+        CheckFallen();
     }
 
     void FixedUpdate()
@@ -80,6 +83,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void CheckFallen()
+    {
+        if (transform.position.y <= -20) 
+            Respawn();
+    }   
+    
     private void UpdateAxis()
     {
         if (isGrounded)
@@ -120,14 +129,11 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    void OnTriggerEnter(Collider other)
+    void OnTriggerStay(Collider other)
     {
         Debug.Log(other.gameObject.name);
-        if (other.gameObject.tag == "Spike")
-        {
-            if (other.gameObject.GetComponent<TimedSpikes>().GetIsUp())
-                transform.position = spawnPoint.transform.position;
-        }
+
+        CheckDamageDealer(other.gameObject);
     }
 
     void OnCollisionEnter(Collision collision)
@@ -135,13 +141,22 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.tag == "Arrivo")
         {
             GameManager.instance.IncrementaLivello();
-            string nomeLivello = $"Livello {GameManager.instance.livello}";
-            Debug.Log("Si va al livello " + nomeLivello);
-            SceneManager.LoadScene(nomeLivello);
         }
         if (collision.gameObject.tag == "Terrain")
             isGrounded = true;
+
+        CheckDamageDealer(collision.gameObject);
     }
+
+    public void CheckDamageDealer(GameObject obj)
+    {
+        if (obj.TryGetComponent<DamageDealer>(out DamageDealer dm))
+        {
+            if (dm.GetActive())
+                Respawn();
+        }
+    }
+
 
     void OnCollisionExit(Collision collision)
     {
@@ -149,4 +164,11 @@ public class PlayerController : MonoBehaviour
             isGrounded = false;
     }
 
+    public void Respawn()
+    {
+        transform.position = spawnPoint.transform.position;
+        Debug.Log("You died! Respawning...");
+        Debug.Log(transform.position.y);
+        cameraObject.GetComponent<CameraController>().ResetCamera();
+    }
 }

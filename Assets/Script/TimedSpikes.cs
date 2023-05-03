@@ -9,15 +9,19 @@ public class TimedSpikes : MonoBehaviour
     [SerializeField]
     private float secondsToUntrigger;
     private float cooldown;
-    private bool isUp;
+
+    [SerializeField]
+    public GameObject spikeContainer;
 
     public GameObject triggerPosition;
     public GameObject startingPosition;
 
+    public DamageDealer dm;
+
     // Start is called before the first frame update
     void Start()
-    { 
-        isUp = true;
+    {
+        dm.SetActive(true);
         cooldown = 0;
     }
 
@@ -25,14 +29,14 @@ public class TimedSpikes : MonoBehaviour
     void Update()
     {
         cooldown += Time.deltaTime;
-        if(isUp)
+        if(dm.GetActive())
         {
             //Spike are up, updating to lower them
             if (cooldown >= secondsToUntrigger)
             {
-                transform.position = startingPosition.transform.position;
+                spikeContainer.transform.position = startingPosition.transform.position;
                 cooldown = 0;
-                isUp = false;
+                dm.SetActive(false);
                 //
             }
         }
@@ -41,16 +45,11 @@ public class TimedSpikes : MonoBehaviour
             //Spikes are down, updating them to rise them
             if(cooldown >= secondsToTrigger)
             {
-                transform.position = triggerPosition.transform.position;
+                spikeContainer.transform.position = triggerPosition.transform.position;
                 cooldown = 0;
-                isUp = true;
+                dm.SetActive(true);
                 //
             }
         }
-    }
-
-    public bool GetIsUp()
-    {
-        return isUp;
     }
 }

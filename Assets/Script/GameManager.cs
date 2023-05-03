@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public int livello;
+    public int countLivelli;
 
     public static GameManager instance { get; private set; }
 
@@ -29,19 +31,14 @@ public class GameManager : MonoBehaviour
 
     public void IncrementaLivello()
     {
-        livello++;
-        Debug.Log("Incrementato al livello " + livello);
-        Debug.Log(gameObject.name);
+        if (livello < countLivelli)
+        {
+            livello++;
+            string nomeLivello = $"Livello {livello}";
+            Debug.Log("Si va al livello " + nomeLivello);
+            SceneManager.LoadScene(nomeLivello);
+        }
+        else
+            Debug.Log("You win!!!");
     }
-
-    /*
-     * Ordine:
-
-    Awake()
-    
-    Start()
-
-    Update / FixedUpdate
-
-    */
 }
