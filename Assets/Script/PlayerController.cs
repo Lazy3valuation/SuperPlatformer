@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     private GameObject spawnPoint;
 
     public GameObject cameraObject;
+    public HUDManager hudManager;
 
     private bool isGrounded;
 
@@ -27,6 +28,9 @@ public class PlayerController : MonoBehaviour
 
     private bool jumpTrigger;
 
+    public bool isPaused;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,6 +38,7 @@ public class PlayerController : MonoBehaviour
         verticalMovement = 0;
         jumpTrigger = false;
         isGrounded = true;
+        isPaused = false;
         spawnPoint = GameObject.FindGameObjectWithTag("Respawn");
         //inizializzano i component/variabili
     }
@@ -45,12 +50,22 @@ public class PlayerController : MonoBehaviour
         CheckJump();
         CheckRun();
         CheckFallen();
+        ManageHUD();
     }
 
     void FixedUpdate()
     {
         Jump();
         Move();
+    }
+
+    private void ManageHUD()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            hudManager.Pause(!isPaused);
+            isPaused = !isPaused;
+        }
     }
 
     private void Move()

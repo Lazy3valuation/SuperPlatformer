@@ -41,4 +41,16 @@ public class GameManager : MonoBehaviour
         else
             Debug.Log("You win!!!");
     }
+
+    public void CaricaLivello()
+    {
+        Debug.Log("Pulsante premuto!");
+        SceneManager.LoadScene("Livello 1");
+    }
+
+    public void Save()
+    {
+        Debug.Log("Saving...");
+        SceneManager.LoadScene("Menu");
+    }
 }

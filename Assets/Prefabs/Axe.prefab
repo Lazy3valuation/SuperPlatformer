@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5194166380045612194}
   - component: {fileID: 5194166380045612196}
+  - component: {fileID: 2285977496020042015}
   m_Layer: 0
   m_Name: Axe
   m_TagString: Untagged
@@ -31,7 +32,7 @@ Transform:
   m_Children:
   - {fileID: 5194166380692562900}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &5194166380045612196
 Animator:
@@ -53,6 +54,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &2285977496020042015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5194166380045612195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6c068ffc99e0bb46aa89dfada0183b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5194166380384621570
 GameObject:
   m_ObjectHideFlags: 0
@@ -242,7 +255,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 03d35c391bca7534681505a1d3e72b9a, type: 2}
+  - {fileID: 2100000, guid: 6278d2b2e48ee0f46b04ab3d14a6eb65, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

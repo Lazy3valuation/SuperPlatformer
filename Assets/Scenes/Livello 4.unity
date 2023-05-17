@@ -179,6 +179,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Axe (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 5194166380425509731, guid: c90789594f852654f9d7a0ec14605890, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6278d2b2e48ee0f46b04ab3d14a6eb65, type: 2}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: c90789594f852654f9d7a0ec14605890, type: 3}
@@ -1188,6 +1192,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Axe (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5194166380425509731, guid: c90789594f852654f9d7a0ec14605890, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6278d2b2e48ee0f46b04ab3d14a6eb65, type: 2}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: c90789594f852654f9d7a0ec14605890, type: 3}
