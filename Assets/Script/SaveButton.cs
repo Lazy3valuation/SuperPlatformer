@@ -9,7 +9,8 @@ public class SaveButton : MonoBehaviour
     void Start()
     {
         Button thisButton = GetComponent<Button>();
-        thisButton.onClick.AddListener(GameManager.instance.Save);
+        thisButton.onClick.AddListener(GameManager.instance.SalvaEdEsci);
+        Debug.Log("Aggiornato il pulsante salva ed esci!");
     }
 
     // Update is called once per frame

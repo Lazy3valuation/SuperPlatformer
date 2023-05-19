@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public int livello;
     public int countLivelli;
+    private GameData save;
+    private string pathToSave;
 
     public static GameManager instance { get; private set; }
 
@@ -15,6 +17,7 @@ public class GameManager : MonoBehaviour
         instance = this;
         //Other variables initialization
         Debug.Log("GameManager instance set.");
+        pathToSave = "Assets/Saves/";
         DontDestroyOnLoad(this);
     }
 
@@ -24,17 +27,13 @@ public class GameManager : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
-    {
-        livello = 1;       
-    }
 
     public void IncrementaLivello()
     {
-        if (livello < countLivelli)
+        if (save.livello < countLivelli)
         {
-            livello++;
-            string nomeLivello = $"Livello {livello}";
+            save.livello++;
+            string nomeLivello = $"Livello {save.livello}";
             Debug.Log("Si va al livello " + nomeLivello);
             SceneManager.LoadScene(nomeLivello);
         }
@@ -44,13 +43,30 @@ public class GameManager : MonoBehaviour
 
     public void CaricaLivello()
     {
-        Debug.Log("Pulsante premuto!");
-        SceneManager.LoadScene("Livello 1");
+        string salvataggioAStringa = File.ReadAllText(pathToSave + "Salvataggio.json");
+        save = JsonUtility.FromJson<GameData>(salvataggioAStringa);
+        string nomeLivello = $"Livello {save.livello}";
+        SceneManager.LoadScene(nomeLivello);
     }
 
-    public void Save()
+    public void NuovaPartita()
+    {
+        save = new GameData();
+        SalvaDati();
+        CaricaLivello();
+    }
+
+    public void SalvaEdEsci()
+    {
+        SalvaDati();
+        SceneManager.LoadScene("Menu");
+        Destroy(this.gameObject);
+    }
+
+    public void SalvaDati()
     {
         Debug.Log("Saving...");
-        SceneManager.LoadScene("Menu");
+        string salvataggioAStringa = JsonUtility.ToJson(save);
+        File.WriteAllText(pathToSave + "Salvataggio.json", salvataggioAStringa);
     }
 }
