@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Menu.unity
+    guid: 045c0e12f4e998c42a30a20f83968445
+  - enabled: 1
     path: Assets/Scenes/Livello 1.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
@@ -14,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Livello 3.unity
     guid: 940beca4599b132478ffc132de7a28c8
+  - enabled: 1
+    path: Assets/Scenes/Livello 4.unity
+    guid: 2ee0455a5efc71742bd1325976337d90
   m_configObjects: {}

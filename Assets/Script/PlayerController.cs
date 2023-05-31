@@ -16,6 +16,8 @@ public class PlayerController : MonoBehaviour
 
     public GameObject cameraObject;
     public HUDManager hudManager;
+    public Animator animator;
+    public AudioSource audioSource;
 
     private bool isGrounded;
 
@@ -40,6 +42,8 @@ public class PlayerController : MonoBehaviour
         isGrounded = true;
         isPaused = false;
         spawnPoint = GameObject.FindGameObjectWithTag("Respawn");
+        animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
         //inizializzano i component/variabili
     }
 
@@ -51,12 +55,31 @@ public class PlayerController : MonoBehaviour
         CheckRun();
         CheckFallen();
         ManageHUD();
+        UpdateAnimations();
     }
 
     void FixedUpdate()
     {
         Jump();
         Move();
+    }
+
+    private void UpdateAnimations()
+    {
+
+        if(isGrounded&& (horizontalMovement != 0 || verticalMovement != 0))
+        {
+            animator.SetBool("isRunning", true);
+        }
+        else
+        {
+            animator.SetBool("isRunning", false);
+        }
+    }
+
+    private void PlayFootstepSound()
+    {
+        audioSource.Play();
     }
 
     private void ManageHUD()

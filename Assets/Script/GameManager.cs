@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public int countLivelli;
     private GameData save;
     private string pathToSave;
+    public List<string> listaLivelli;
 
     public static GameManager instance { get; private set; }
 
@@ -32,10 +33,15 @@ public class GameManager : MonoBehaviour
     {
         if (save.livello < countLivelli)
         {
+            /*
             save.livello++;
             string nomeLivello = $"Livello {save.livello}";
             Debug.Log("Si va al livello " + nomeLivello);
             SceneManager.LoadScene(nomeLivello);
+            */
+            save.livello++;
+            Debug.Log("Si va al livello " + save.livello);
+            SceneManager.LoadScene(listaLivelli[save.livello - 1]);
         }
         else
             Debug.Log("You win!!!");
@@ -45,8 +51,7 @@ public class GameManager : MonoBehaviour
     {
         string salvataggioAStringa = File.ReadAllText(pathToSave + "Salvataggio.json");
         save = JsonUtility.FromJson<GameData>(salvataggioAStringa);
-        string nomeLivello = $"Livello {save.livello}";
-        SceneManager.LoadScene(nomeLivello);
+        SceneManager.LoadScene(listaLivelli[save.livello - 1]);
     }
 
     public void NuovaPartita()
