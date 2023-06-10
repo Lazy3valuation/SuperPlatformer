@@ -1,3 +1,4 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,6 +19,7 @@ public class PlayerController : MonoBehaviour
     public HUDManager hudManager;
     public Animator animator;
     public AudioSource audioSource;
+    public List<AudioClip> stepSounds;
 
     private bool isGrounded;
 
@@ -31,11 +33,15 @@ public class PlayerController : MonoBehaviour
     private bool jumpTrigger;
 
     public bool isPaused;
+    public bool changingLevel;
+
+    private LayerMask groundMask;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        changingLevel = false;
         horizontalMovement = 0;
         verticalMovement = 0;
         jumpTrigger = false;
@@ -44,6 +50,16 @@ public class PlayerController : MonoBehaviour
         spawnPoint = GameObject.FindGameObjectWithTag("Respawn");
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
+
+        int playerLayer = LayerMask.NameToLayer("Player");
+
+        Debug.Log(System.Convert.ToString(groundMask.value, 2));
+        groundMask = ~(1 << playerLayer);
+        Debug.Log(System.Convert.ToString(groundMask.value, 2));
+        groundMask = ~groundMask;
+        Debug.Log(System.Convert.ToString(groundMask.value, 2));
+
+
         //inizializzano i component/variabili
     }
 
@@ -62,6 +78,7 @@ public class PlayerController : MonoBehaviour
     {
         Jump();
         Move();
+        CheckGround();
     }
 
     private void UpdateAnimations()
@@ -79,6 +96,8 @@ public class PlayerController : MonoBehaviour
 
     private void PlayFootstepSound()
     {
+        int randomSound = Random.Range(0, stepSounds.Count - 1);
+        audioSource.clip = stepSounds[randomSound];
         audioSource.Play();
     }
 
@@ -141,6 +160,25 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void CheckGround()
+    {
+        RaycastHit hit;
+        bool groundFound = false;
+        
+
+        if (Physics.SphereCast(transform.position, 0.3f, -Vector3.up, out hit, ~groundMask))
+        {
+            if(hit.distance < 0.95f)
+            {
+                isGrounded = true;
+                groundFound = true;
+            }
+        }
+
+        if (!groundFound)
+            isGrounded = false;
+    }
+
     private void CheckJump()
     {
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
@@ -178,10 +216,12 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.tag == "Arrivo")
         {
-            GameManager.instance.IncrementaLivello();
+            if(!changingLevel)
+            {
+                GameManager.instance.IncrementaLivello();
+                changingLevel = true;
+            }
         }
-        if (collision.gameObject.tag == "Terrain")
-            isGrounded = true;
 
         CheckDamageDealer(collision.gameObject);
     }
@@ -193,13 +233,6 @@ public class PlayerController : MonoBehaviour
             if (dm.GetActive())
                 Respawn();
         }
-    }
-
-
-    void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.tag == "Terrain")
-            isGrounded = false;
     }
 
     public void Respawn()
